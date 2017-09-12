@@ -51,8 +51,15 @@ function createAjaxOption(method, params, success, error, complete) {
 
     // default params
     params = $.extend({
-        extendoutput: true,
-        limit: options.limit
+        // In Zabbix 2.2, 'extendoutput'=True was removed in favor of
+        // 'output'='extend'.
+        // In Zabbix 3.4, excess params at commands where they do not
+        // belong now return errors, meaning you cannot log in with
+        // this old option.
+        // //extendoutput: true,
+        // Zabbix 3.4 does not cope with this option everywhere. Leave
+        // it out for now.
+        // //limit: options.limit
     }, params);
 
     // merge params with username and password
