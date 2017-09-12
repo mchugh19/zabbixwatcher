@@ -47,7 +47,9 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 			me.zabbixService.getTriggerList(config, function(triggerList) {
 				$.log('refresh zabbix status');
 				me.zabbixStatus.updateTriggerList(triggerList);
-				me.updateIconAndPlaySound(triggerList.length);
+				$(me.zabbixStatus.notifyUser).each(function(index, value) {
+					me.updateIconAndPlaySound(triggerList.length, value);
+				});
 			});
 
 			me.zabbixService.getHostgroupList(function(grouphostList) {
@@ -67,7 +69,7 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	/**
 	 * update icon and play sound
 	 */
-	updateIconAndPlaySound: function(triggerCount) { var me = this;
+	updateIconAndPlaySound: function(triggerCount, value) { var me = this;
 
 		var config = $.getLocalConfig();
 
@@ -100,19 +102,19 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 				var bing = new Audio('sounds/bing.mp3');
 				bing.play();
 			}
-			me.notifyUser();
+			me.notifyUser(value);
 		}
 	},
 
 	/**
 	 * notify user
 	 */
-	notifyUser: function() { var me = this;
+	notifyUser: function(value) { var me = this;
 
-		chrome.notifications.create('notification',  {
+		chrome.notifications.create('notification', {
 			type: "basic",
-			title: "Zabbix Notifier",
-			message: "There are new trigger events in your list!",
+			title: value.host,
+			message: value.name,
 			iconUrl: "images/icon128.png"
 		}, function() {
 			setTimeout(function() { chrome.notifications.clear('notification', function() {}); }, 5000);
