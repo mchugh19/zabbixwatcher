@@ -1,6 +1,5 @@
 <div id="header">
-	<a target="_blank" href="http://www.gigatec.de/"><img id="logo" src="images/logo_gigatec.png" /></a> 
-	<h1>Zabbix Notifier: Overview</h1>
+	<h1>Zabbix Watcher: Overview</h1>
 </div>
 
 <hr />

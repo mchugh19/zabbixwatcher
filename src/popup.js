@@ -72,8 +72,8 @@ $(document).ready(function() {
 				'zabbixBase': zabbixBase,
 				'zabbixUser': $content.find('#zabbixUser').val(),
 				'zabbixPass': zabbixPass,
-				'playSound': $content.find('input[name="playSound"][value="true"]').attr('checked') ? true : false,
-				'hideAck': $content.find('input[name="hideAck"][value="true"]').attr('checked') ? true : false,
+                                'playSound': $content.find('input[name="playSound"][value="true"]').prop('checked') ? true : false,
+                                'hideAck': $content.find('input[name="hideAck"][value="true"]').prop('checked') ? true : false,
 				'interval': $content.find('#interval').val(),
 				'groupid': oldConfig['groupid']
 			});

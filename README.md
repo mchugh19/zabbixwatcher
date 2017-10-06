@@ -1,23 +1,22 @@
 zabbixnotifier
 ==============
 
-Zabbix Notifier for Google Chrome
+Zabbix Notifier for Mozilla Firefox
 
 ![
-](https://raw.github.com/gigatec/zabbixnotifier/master/screenshot.png)
+](https://github.com/rsanting/zabbixnotifier/blob/master/screenshot.png)
 
-Funktionen: 
-Mit dieser Erweiterung werden aktuelle Statusmeldungen des Zabbix Monitoring-Systems direkt im Browser angezeigt. Störungen und Probleme werden so schnell und zuverlässig erkannt. 
-Auch eine Soundbenachrichtigung ist konfigurierbar. 
-Durch die sich ändernde Farbe des Icons in der Stautsleiste des Browsers ist auf einen Blick ein Überblick über die überwachten Systeme und Dienste möglich. 
 
-Details:
-- Getestet mit Zabbix 2.0.x
-- Nutzt die Zabbix-API
-- User-Name, Passwort, URL, Port und Updateintervall sind konfigurierbar
+features:
+With this extension, current status messages of the Zabbix monitoring system are displayed directly in the browser. Faults and problems are detected quickly and reliably. Due to the changing color of the icon in the browser's browser bar, the monitored systems and services can be viewed at a glance.
+
+details:
+- Tested with Zabbix 2.0.x
+- Use the Zabbix API
+- User name, password, URL, port, notification sound and update interval are configurable
 
 ChangeLog:
-- 1.1.3 - Behebt Login-Probleme in Verbindung mit Zabbix 2.0.4
+- 1.1.3 - Fixes login issues related to Zabbix 2.0.4
 - 1.2   - Bugfixes (Update-Problems), Number of Problems is displayed in the icon
 - 1.3   - Bugfix (Wrong icon when there are no notifications)
 - 1.4   - Dependency Checking (skipDependent: '1')
@@ -25,12 +24,4 @@ ChangeLog:
 - 1.6   - Bugfix Zabbix 2.4 Authentication
 - 1.6.1 - Add feature filter by group
 - 1.7   - Add support for zabbix 3.4, display the System Name
-
-Chrome Web Store: https://chrome.google.com/webstore/detail/zabbix-notifier/ikeijbmpddnkaeejokgifioccbcijjfo
-
-Contributors:
-- Stefan Kreuter
-- skreuter
-- gigatec
-- Nicolas Berthe
-- interpeix
+- 1.7.3 - Added Mozilla Firefox support

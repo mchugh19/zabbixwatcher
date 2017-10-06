@@ -5,7 +5,7 @@ templates['notification'] = template(function (Handlebars,depth0,helpers,partial
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
+
   var buffer = "", stack1;
   buffer += "\n	<div class=\"item ";
   stack1 = depth0.priorityClass;
@@ -30,7 +30,7 @@ templates['overview'] = template(function (Handlebars,depth0,helpers,partials,da
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
+
   var buffer = "", stack1;
   buffer += "\n		<option value=\"";
   stack1 = depth0.groupid;
@@ -42,7 +42,7 @@ function program1(depth0,data) {
   return buffer;}
 
 function program3(depth0,data) {
-  
+
   var buffer = "", stack1;
   buffer += "\n	<tr class=\"";
   stack1 = depth0.priorityClass;
@@ -62,7 +62,7 @@ function program3(depth0,data) {
   buffer += escapeExpression(stack1) + "</td>\n	</tr>\n	";
   return buffer;}
 
-  buffer += "<div id=\"header\">\n	<a target=\"_blank\" href=\"http://www.gigatec.de/\"><img id=\"logo\" src=\"images/logo_gigatec.png\" /></a> \n	<h1>Zabbix Notifier: Overview</h1>\n</div>\n\n<hr />\n\n<div id=\"menu\">\n	<label>Group : </label>\n	<select id=\"groupid\">\n		<option value=\"\">---</option>\n		";
+  buffer += "<div id=\"header\">\n	<h1>Zabbix Watcher: Overview</h1>\n</div>\n\n<hr />\n\n<div id=\"menu\">\n	<label>Group : </label>\n	<select id=\"groupid\">\n		<option value=\"\">---</option>\n		";
   stack1 = depth0.data;
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.grouphostList;
   stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
@@ -79,26 +79,26 @@ templates['settings'] = template(function (Handlebars,depth0,helpers,partials,da
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
-  
+
+
   return "checked=\"checked\"";}
 
 function program3(depth0,data) {
-  
-  
+
+
   return "checked=\"checked\"";}
 
 function program5(depth0,data) {
-  
-  
+
+
   return "checked=\"checked\"";}
 
 function program7(depth0,data) {
-  
-  
+
+
   return "checked=\"checked\"";}
 
-  buffer += "<div id=\"header\">\n	<a target=\"_blank\" href=\"http://www.gigatec.de/\"><img id=\"logo\" src=\"images/logo_gigatec.png\" /></a> \n	<h1>Zabbix Notifier: Settings</h1>\n</div>\n\n<hr />\n\n<div id=\"settings\">\n	<form>\n		<div>\n			<label for=\"zabbixBase\">Zabbix Base: </label>\n			<input id=\"zabbixBase\" type=\"text\" value=\"";
+  buffer += "<div id=\"header\">\n	<h1>Zabbix Watcher: Settings</h1>\n</div>\n\n<hr />\n\n<div id=\"settings\">\n	<form>\n		<div>\n			<label for=\"zabbixBase\">Zabbix Base: </label>\n			<input id=\"zabbixBase\" type=\"text\" value=\"";
   stack1 = depth0.data;
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.zabbixBase;
   stack1 = typeof stack1 === functionType ? stack1() : stack1;
