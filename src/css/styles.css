@@ -1,5 +1,4 @@
 body {
-	font-family: Arial;
 	font-size: 10pt;
 	padding: 0;
 	margin: 0; 
@@ -106,6 +105,16 @@ hr {
 
 #menu {
 	text-align: right;
+}
+
+#filter {
+    min-height: 24px;
+	font-size: 16px;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	position: relative;
+	top: 2px;
+	line-height: 1.4;
 }
 
 button {

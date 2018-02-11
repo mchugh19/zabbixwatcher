@@ -67,7 +67,8 @@ function program3(depth0,data) {
   buffer += `
   <div id="header"><h1>Zabbix Watcher: Overview</h1></div>
   <hr /><div id="menu">
-  <label>Group : </label>
+  <input type="search" id="filter" placeholder="Filter Results">
+  | <label>Group : </label>
   <select id="groupid" multiple="multiple">
   <!-- <option value="">---</option>	-->
   `;
@@ -82,6 +83,7 @@ function program3(depth0,data) {
   | <span class="link" id="zabbixButton">Open Zabbix</span>
   </div><hr />
   <table class="overview details">
+  <tbody id="triggerTable">
   <tr class="header">
     <th>System</th>
     <th>Description</th>
@@ -93,7 +95,7 @@ function program3(depth0,data) {
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.triggerList;
   stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n	<tr>\n</table>";
+  buffer += "</tbody></table>";
   return buffer;});
 
 templates['settings'] = template(function (Handlebars,depth0,helpers,partials,data) {
