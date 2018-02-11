@@ -36,6 +36,31 @@ $(document).ready(function() {
 			selectAll: false
 		});
 
+		$.extend($.expr[':'], {
+			'containsi': function(elem, i, match, array)
+			{
+				return (elem.textContent || elem.innerText || '').toLowerCase()
+				.indexOf((match[3] || "").toLowerCase()) >= 0;
+			}
+		});
+
+		function filter(resultTable) {
+			var rows = $("#triggerTable").find("tr").not("tr.header").hide();
+			var data = resultTable.value.split(" ");
+			$.each(data, function(i, v) {
+				rows.filter(":containsi('" + v + "')").show();
+			});
+		}
+
+		// Filter on enter or input clear
+		$content.find("#filter").on('search', function() {
+			filter(this);
+		});
+		// Filter on keypress
+		$content.find("#filter").keyup(function() {
+			filter(this);
+		});
+
 		$content.find('#refresh').click(function() {
 			App.zabbixManager.refreshZabbixStatus();
 			App.zabbixManager.re
@@ -94,5 +119,5 @@ $(document).ready(function() {
 			window.close();
 		});
 	});
-	
+
 });
