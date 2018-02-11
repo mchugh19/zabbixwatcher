@@ -29,7 +29,18 @@ $(document).ready(function() {
 		});
 
 		$content.find('#groupid').val(config['groupid']);
+		$content.find('#groupid').multipleSelect({
+			placeholder: "All Hosts",
+			filter: true,
+			width: 360,
+			selectAll: false
+		});
 
+		$content.find('#refresh').click(function() {
+			App.zabbixManager.refreshZabbixStatus();
+			App.zabbixManager.re
+			window.close();
+		});
 
 		$content.find('#groupid').change(function() {
 			var config = $.getLocalConfig();
@@ -43,11 +54,7 @@ $(document).ready(function() {
 				'groupid': 		$content.find('#groupid').val(),
 			});
 			App.zabbixManager.refreshZabbixStatus();
-			window.close();
 		});
-
-
-
 	});
 
 	// SETTINGS
@@ -87,6 +94,5 @@ $(document).ready(function() {
 			window.close();
 		});
 	});
-
 	
 });
