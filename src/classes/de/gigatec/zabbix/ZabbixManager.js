@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
-	
+
 	/*** PROPERTIES ***/
 	
 	zabbixUrl: null,
@@ -25,7 +25,7 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	changeConfiguration: function(cb) { var me = this;
 
 		$.log('changeConfiguration');
-	
+
 		var config = $.getLocalConfig();
 		if (config['zabbixBase']) {
 			if (!me.zabbixService) {
@@ -40,15 +40,16 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	 * refresh zabbix status
 	 */
 	refreshZabbixStatus: function() { var me = this;
-	
+
 		var config = $.getLocalConfig();
 
 		if (me.zabbixService) {
 			me.zabbixService.getTriggerList(config, function(triggerList) {
 				$.log('refresh zabbix status');
 				me.zabbixStatus.updateTriggerList(triggerList);
+				me.updateIconAndPlaySound(triggerList.length);
 				$(me.zabbixStatus.notifyUser).each(function(index, value) {
-					me.updateIconAndPlaySound(triggerList.length, value);
+					me.notifyUser(value)
 				});
 			});
 
@@ -69,7 +70,7 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 	/**
 	 * update icon and play sound
 	 */
-	updateIconAndPlaySound: function(triggerCount, value) { var me = this;
+	updateIconAndPlaySound: function(triggerCount) { var me = this;
 
 		var config = $.getLocalConfig();
 
@@ -102,7 +103,6 @@ App.de_gigatec_zabbix_ZabbixManager = Ember.Object.extend({
 				var bing = new Audio('sounds/bing.mp3');
 				bing.play();
 			}
-			me.notifyUser(value);
 		}
 	},
 

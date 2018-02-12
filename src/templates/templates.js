@@ -25,6 +25,7 @@ function program1(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n\n</div>";
   return buffer;});
+
 templates['overview'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
@@ -39,7 +40,8 @@ function program1(depth0,data) {
   stack1 = depth0.name;
   stack1 = typeof stack1 === functionType ? stack1() : stack1;
   buffer += escapeExpression(stack1) + "</option>\n		";
-  return buffer;}
+  return buffer;
+}
 
 function program3(depth0,data) {
 
@@ -62,18 +64,40 @@ function program3(depth0,data) {
   buffer += escapeExpression(stack1) + "</td>\n	</tr>\n	";
   return buffer;}
 
-  buffer += "<div id=\"header\">\n	<h1>Zabbix Watcher: Overview</h1>\n</div>\n\n<hr />\n\n<div id=\"menu\">\n	<label>Group : </label>\n	<select id=\"groupid\">\n		<option value=\"\">---</option>\n		";
+  buffer += `
+  <div id="header"><h1>Zabbix Watcher: Overview</h1></div>
+  <hr /><div id="menu">
+  <input type="search" id="filter" placeholder="Filter Results">
+  | <label>Group : </label>
+  <select id="groupid" multiple="multiple">
+  <!-- <option value="">---</option>	-->
+  `;
   stack1 = depth0.data;
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.grouphostList;
   stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n	</select>\n	|\n	<span class=\"link\" id=\"settingsButton\">Settings</span>\n	|\n	<span class=\"link\" id=\"zabbixButton\">Open Zabbix</span>\n</div>\n\n<hr />\n\n<table class=\"overview details\">\n	<tr class=\"header\">\n		<th>System</th>\n		<th>Description</th>\n		<th>Priority</th>\n		<th>Age</th>\n	</tr>\n	";
+  buffer += `
+  </select>
+  <!-- <button id="refresh">&#8635;</button> -->
+  | <span class="link" id="settingsButton">Settings</span>
+  | <span class="link" id="zabbixButton">Open Zabbix</span>
+  </div><hr />
+  <table class="overview details">
+  <tbody id="triggerTable">
+  <tr class="header">
+    <th>System</th>
+    <th>Description</th>
+    <th>Priority</th>
+    <th>Age</th>
+  </tr>
+  `;
   stack1 = depth0.data;
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.triggerList;
   stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n	<tr>\n</table>";
+  buffer += "</tbody></table>";
   return buffer;});
+
 templates['settings'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;

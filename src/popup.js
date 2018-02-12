@@ -29,7 +29,43 @@ $(document).ready(function() {
 		});
 
 		$content.find('#groupid').val(config['groupid']);
+		$content.find('#groupid').multipleSelect({
+			placeholder: "All Hosts",
+			filter: true,
+			width: 360,
+			selectAll: false
+		});
 
+		$.extend($.expr[':'], {
+			'containsi': function(elem, i, match, array)
+			{
+				return (elem.textContent || elem.innerText || '').toLowerCase()
+				.indexOf((match[3] || "").toLowerCase()) >= 0;
+			}
+		});
+
+		function filter(resultTable) {
+			var rows = $("#triggerTable").find("tr").not("tr.header").hide();
+			var data = resultTable.value.split(" ");
+			$.each(data, function(i, v) {
+				rows.filter(":containsi('" + v + "')").show();
+			});
+		}
+
+		// Filter on enter or input clear
+		$content.find("#filter").on('search', function() {
+			filter(this);
+		});
+		// Filter on keypress
+		$content.find("#filter").keyup(function() {
+			filter(this);
+		});
+
+		$content.find('#refresh').click(function() {
+			App.zabbixManager.refreshZabbixStatus();
+			App.zabbixManager.re
+			window.close();
+		});
 
 		$content.find('#groupid').change(function() {
 			var config = $.getLocalConfig();
@@ -43,11 +79,7 @@ $(document).ready(function() {
 				'groupid': 		$content.find('#groupid').val(),
 			});
 			App.zabbixManager.refreshZabbixStatus();
-			window.close();
 		});
-
-
-
 	});
 
 	// SETTINGS
@@ -88,5 +120,4 @@ $(document).ready(function() {
 		});
 	});
 
-	
 });

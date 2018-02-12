@@ -53,7 +53,7 @@ App.de_gigatec_zabbix_ZabbixService = Ember.Object.extend({
 		};
 
 		if (config['groupid'] && config['groupid'].length > 0 ) {
-			params['groupids'] = config['groupid'].split(',');
+			params['groupids'] = config['groupid'];
 		}
 
 		if (config['hideAck']) {
