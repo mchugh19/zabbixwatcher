@@ -1,166 +1,83 @@
 (function() {
-  var template = Handlebars.template, templates = Ember.TEMPLATES = Handlebars.templates || {};
-templates['notification'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  helpers = helpers || Handlebars.helpers;
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var templates = Ember.TEMPLATES = Handlebars.templates || {};
 
+  templates['overview'] = Handlebars.template(function (Handlebars,depth0) {
+    var buffer = "", escapeExpression=this.escapeExpression;
 
-
-  function program1(depth0,data) {
-    var buffer = "", stack1;
-    buffer += "\n	<div class=\"item ";
-    stack1 = depth0.priorityClass;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "\">";
-    stack1 = depth0.system;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + ": ";
-    stack1 = depth0.name;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n";
-    return buffer;}
-
-    buffer += "<div class=\"notifications\">\n\n";
-    stack1 = depth0.data;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n\n</div>";
-    return buffer;});
-
-  templates['overview'] = template(function (Handlebars,depth0,helpers,partials,data) {
-      helpers = helpers || Handlebars.helpers;
-      var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
-    function program1(depth0,data) {
-      var buffer = "", stack1;
-      buffer += "\n		<option value=\"";
-      stack1 = depth0.groupid;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1) + "\">";
-      stack1 = depth0.name;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1) + "</option>\n		";
+    function populateHostGroups(groupData) {
+      var buffer = "";
+      buffer += `<option value="` + escapeExpression(groupData.groupid) + `">`;
+      buffer += escapeExpression(groupData.name) + "</option>\n		";
       return buffer;
     }
 
-    function program3(depth0,data) {
-      //var config = $.getLocalConfig();
-      //$.log("Got config: " + JSON.stringify(config));
-
-      var buffer = "", stack1;
-      buffer += "\n	<tr class=\"";
-      stack1 = depth0.priorityClass;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1) + "\">\n		<td class=\"system\">";
-      stack1 = depth0.host;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1)
-      //$.log("printing data: " + JSON.stringify(data));
+    function populateItems(triggerData) {
+      var buffer = "";
+      buffer += `<tr class="`;
+      buffer += escapeExpression(triggerData.priorityClass) + `"><td class="system">`;
+      buffer += escapeExpression(triggerData.host)
       //<a href="` + config.zabbixBase + `/hostinventories.php" class="button" id="systemLink" target="_blank">&there4;</a> -->
-
       buffer += `
       <input id="systemLink" type="button" value="&there4;">
       </td>
       <td class="name">`;
-      stack1 = depth0.name;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1) + "</td>\n		<td class=\"priority\">";
-      stack1 = depth0.priority;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1) + "</td>\n		<td class=\"age\">";
-      stack1 = depth0.age;
-      stack1 = typeof stack1 === functionType ? stack1() : stack1;
-      buffer += escapeExpression(stack1) + "</td>\n	</tr>\n	";
-      return buffer;}
-
-      buffer += `
-      <div id="header"><h1>Zabbix Watcher: Overview</h1></div>
-      <hr /><div id="menu">
-      <input type="search" id="filter" placeholder="Filter Results">
-      | <label>Group : </label>
-      <select id="groupid" multiple="multiple">
-      <!-- <option value="">---</option>	-->
-      `;
-      stack1 = depth0.data;
-      stack1 = stack1 == null || stack1 === false ? stack1 : stack1.grouphostList;
-      stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
-      if(stack1 || stack1 === 0) { buffer += stack1; }
-      buffer += `
-      </select>
-      <!-- <button id="refresh">&#8635;</button> -->
-      | <span class="link" id="settingsButton">Settings</span>
-      | <span class="link" id="zabbixButton">Open Zabbix</span>
-      </div><hr />
-      <table class="overview details">
-      <tbody id="triggerTable">
-      <tr class="header">
-        <th>System</th>
-        <th>Description</th>
-        <th>Priority</th>
-        <th>Age</th>
-      </tr>
-      `;
-      stack1 = depth0.data;
-      stack1 = stack1 == null || stack1 === false ? stack1 : stack1.triggerList;
-      stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
-      if(stack1 || stack1 === 0) { buffer += stack1; }
-      buffer += "</tbody></table>";
+      buffer += escapeExpression(triggerData.name) + `</td><td class="priority">`;
+      buffer += escapeExpression(triggerData.priority) + `</td><td class="age">`;
+      buffer += escapeExpression(triggerData.age) + "</td></tr>";
       return buffer;
+    }
+
+    buffer += `
+    <div id="header"><h1>Zabbix Watcher: Overview</h1></div>
+    <hr /><div id="menu">
+    <input type="search" id="filter" placeholder="Filter Results">
+    | <label>Group : </label>
+    <select id="groupid" multiple="multiple">`;
+    var hostgroupHTML = "";
+    $(depth0.data.grouphostList).each(function(iterator, value) {
+      hostgroupHTML += populateHostGroups(value);
+    });
+    if(hostgroupHTML || hostgroupHTML === 0) { buffer += hostgroupHTML; }
+    buffer += `
+    </select>
+    <!-- <button id="refresh">&#8635;</button> -->
+    | <span class="link" id="settingsButton">Settings</span>
+    | <span class="link" id="zabbixButton">Open Zabbix</span>
+    </div><hr />
+    <table class="overview details">
+    <tbody id="triggerTable">
+    <tr class="header">
+      <th>System</th>
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Age</th>
+    </tr>
+    `;
+    var triggerHTML = "";
+    $(depth0.data.triggerList).each(function(iterator, value) {
+      triggerHTML += populateItems(value);
+    });
+    if(triggerHTML || triggerHTML === 0) { buffer += triggerHTML; }
+    buffer += "</tbody></table>";
+    return buffer;
   });
 
-  templates['settings'] = template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  templates['settings'] = Handlebars.template(function (Handlebars,depth0) {
+    var buffer = "", escapeExpression=this.escapeExpression;
 
-    function program1(depth0,data) {
-      return "checked=\"checked\"";
-    }
-
-    function program3(depth0,data) {
-      return "checked=\"checked\"";
-    }
-
-    function program5(depth0,data) {
-      return "checked=\"checked\"";
-    }
-
-    function program7(depth0,data) {
-      return "checked=\"checked\"";
-    }
-
-    buffer += "<div id=\"header\">\n	<h1>Zabbix Watcher: Settings</h1>\n</div>\n\n<hr />\n\n<div id=\"settings\">\n	<form>\n		<div>\n			<label for=\"zabbixBase\">Zabbix Base: </label>\n			<input id=\"zabbixBase\" type=\"text\" value=\"";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.zabbixBase;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "\" />\n		</div>\n		<div>\n			<label for=\"zabbixUser\">Zabbix User: </label>\n			<input id=\"zabbixUser\" type=\"text\" value=\"";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.zabbixUser;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "\" />\n		</div>\n		<div>\n			<label for=\"zabbixPass\">Zabbix Pass: </label>\n			<input id=\"zabbixPass\" type=\"password\" value=\"***********\" />\n		</div>\n		<div>\n			<label for=\"interval\">Update Interval (s): </label>\n			<input id=\"interval\" type=\"text\" value=\"";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.interval;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "\" />\n		</div>\n		<div>\n			<label for=\"playSound\">Play Sound: </label>\n			<input id=\"playSound\" name=\"playSound\" type=\"radio\" value=\"true\" ";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.playSound;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += ">Yes</input>\n			<input id=\"playSound\" name=\"playSound\" type=\"radio\" value=\"false\" ";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.playSound;
-    stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += ">No</input>\n		</div>\n		<div>\n			<label for=\"hideAck\">Hide Ack Events: </label>\n			<input id=\"hideAck\" name=\"hideAck\" type=\"radio\" value=\"true\" ";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.hideAck;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += ">Yes</input>\n			<input id=\"hideAck\" name=\"hideAck\" type=\"radio\" value=\"false\" ";
-    stack1 = depth0.data;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.hideAck;
-    stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(7, program7, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += ">No</input>\n		</div>\n\n		<div class=\"buttons\">\n			<input id=\"saveButton\" type=\"submit\" value=\"Save\" />\n			<input id=\"cancelButton\" type=\"button\" value=\"Cancel\" />\n		</div>\n	</form>\n</div>";
+    buffer += `<div id="header"><h1>Zabbix Watcher: Settings</h1></div><hr />
+    <div id="settings"><form><div><label for="zabbixBase">Zabbix Base: </label><input id="zabbixBase" type="text" value="`;
+    buffer += escapeExpression(depth0.data.zabbixBase) + `" /></div><div><label for="zabbixUser">Zabbix User: </label><input id="zabbixUser" type="text" value="`;
+    buffer += escapeExpression(depth0.data.zabbixUser) + `" /></div><div><label for="zabbixPass">Zabbix Pass: </label><input id="zabbixPass" type="password" value="***********" /></div><div><label for="interval">Update Interval (s): </label><input id="interval" type="text" value="`;
+    buffer += escapeExpression(depth0.data.interval) + `" /></div><div><label for="playSound">Play Sound: </label><input id="playSound" name="playSound" type="radio" value="true" `;
+    if (depth0.data.playSound) {buffer += `checked="checked"`;}
+    buffer += `>Yes</input><input id="playSound" name="playSound" type="radio" value="false" `;
+    if (!depth0.data.playSound) {buffer += `checked="checked"`;}
+    buffer += `>No</input></div><div><label for="hideAck">Hide Ack Events: </label><input id="hideAck" name="hideAck" type="radio" value="true" `;
+    if (depth0.data.hideAck) {buffer += `checked="checked"`;}
+    buffer += `>Yes</input><input id="hideAck" name="hideAck" type="radio" value="false" `;
+    if (!depth0.data.hideAck) {buffer += `checked="checked"`;}
+    buffer += `>No</input></div><div class="buttons"><input id="saveButton" type="submit" value="Save" /><input id="cancelButton" type="button" value="Cancel" /></div></form></div>`;
     return buffer;
   });
 })();
