@@ -32,7 +32,7 @@ $(document).ready(function() {
 		$content.find('#groupid').multipleSelect({
 			placeholder: "All Hosts",
 			filter: true,
-			width: 360,
+			width: 320,
 			selectAll: false
 		});
 
