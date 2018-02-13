@@ -65,7 +65,6 @@ App.de_gigatec_zabbix_ZabbixStatus = Ember.Object.extend({
 	 * update trigger list
 	 */
 	updateTriggerList: function(list) { var me = this;
-	
 		var notifyUser = [];
 	
 		// triggers info
@@ -91,7 +90,9 @@ App.de_gigatec_zabbix_ZabbixStatus = Ember.Object.extend({
 				'confirmed':     0,
 				'system':        value.hostname,
 				'name':          value.description,
-				'host': value.hosts[0].name
+				'host':          value.hosts[0].name,
+				'hostid':        value.hosts[0].hostid,
+				'triggerid':     value.triggerid
 			};
 			triggerList.push(item);
 			
