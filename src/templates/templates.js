@@ -12,18 +12,24 @@
     }
 
     function populateItems(triggerData) {
+      var config = $.getLocalConfig();
       var buffer = "";
-      buffer += `<tr class="`;
-      buffer += escapeExpression(triggerData.priorityClass) + `"><td class="system">`;
-      buffer += escapeExpression(triggerData.host)
-      //<a href="` + config.zabbixBase + `/hostinventories.php" class="button" id="systemLink" target="_blank">&there4;</a> -->
+      
+      buffer += `<tr class="` + escapeExpression(triggerData.priorityClass) + `"><td class="system">`;
+      buffer += `<i class="arrow" title="arrow icon"></i>` + escapeExpression(triggerData.host)
       buffer += `
-      <input id="systemLink" type="button" value="&there4;">
       </td>
       <td class="name">`;
       buffer += escapeExpression(triggerData.name) + `</td><td class="priority">`;
       buffer += escapeExpression(triggerData.priority) + `</td><td class="age">`;
       buffer += escapeExpression(triggerData.age) + "</td></tr>";
+      buffer += `<tr id="advanced" class="hidden"><td id="advanced" colspan="4">
+      <a href="` + config.zabbixBase + `hostinventories.php?hostid=` + triggerData.hostid + `" class="button" id="zablink" target="_blank">Host Details</a>
+      <a href="` + config.zabbixBase + `latest.php?fullscreen=0&filter_set=1&show_without_data=1&hostids%5B%5D=` + triggerData.hostid + `" class="button" id="zablink" target="_blank">Latest Data</a>
+      <a href="` + config.zabbixBase + `charts.php?fullscreen=0&groupid=0&graphid=0&hostid=` + triggerData.hostid + `" class="button" id="zablink" target="_blank">Host Graphs</a>
+       | 
+      <a href="` + config.zabbixBase + `zabbix.php?action=problem.view&filter_set=1&filter_triggerids%5B%5D=` + triggerData.triggerid + `" class="button" id="zablink" target="_blank">Problem Details</a>
+      </td></tr>`;
       return buffer;
     }
 
@@ -46,7 +52,7 @@
     </div><hr />
     <table class="overview details">
     <tbody id="triggerTable">
-    <tr class="header">
+    <tr class="header odd">
       <th>System</th>
       <th>Description</th>
       <th>Priority</th>
@@ -61,6 +67,7 @@
     buffer += "</tbody></table>";
     return buffer;
   });
+
 
   templates['settings'] = Handlebars.template(function (Handlebars,depth0) {
     var buffer = "", escapeExpression=this.escapeExpression;

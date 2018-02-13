@@ -10,7 +10,7 @@ $(document).ready(function() {
 	App = chrome.extension.getBackgroundPage().App;
 
 	var $body = $('body');
-	
+
 	// OVERVIEW
 	var $overview = $.createView('overview', App.zabbixManager.get('zabbixStatus'), function($content) {
 
@@ -28,6 +28,7 @@ $(document).ready(function() {
 			}
 		});
 
+		// populate and activate multi-select
 		$content.find('#groupid').val(config['groupid']);
 		$content.find('#groupid').multipleSelect({
 			placeholder: "All Hosts",
@@ -36,6 +37,17 @@ $(document).ready(function() {
 			selectAll: false
 		});
 
+		// Support toggle of advanced functionality row
+		$(".overview tr:odd").addClass("odd");
+		$(".overview tr.odd").click(function () {
+			var trToToggle = $(this).next("tr");
+			$(".overview tr:not(.odd)").not(trToToggle).hide();
+			$(".overview tr.odd").not($(this)).find("i.arrow").removeClass("toggle-down");
+			$(this).find("i.arrow").toggleClass("toggle-down");
+			$(trToToggle).toggle();
+		});
+
+		// Create case insensative table filter
 		$.extend($.expr[':'], {
 			'containsi': function(elem, i, match, array)
 			{
@@ -43,9 +55,9 @@ $(document).ready(function() {
 				.indexOf((match[3] || "").toLowerCase()) >= 0;
 			}
 		});
-
 		function filter(resultTable) {
-			var rows = $("#triggerTable").find("tr").not("tr.header").hide();
+			$("#triggerTable").find("tr").not("tr.header").hide();
+			var rows = $("#triggerTable").find("tr").not("tr.header").not("#advanced");
 			var data = resultTable.value.split(" ");
 			$.each(data, function(i, v) {
 				rows.filter(":containsi('" + v + "')").show();
@@ -63,7 +75,6 @@ $(document).ready(function() {
 
 		$content.find('#refresh').click(function() {
 			App.zabbixManager.refreshZabbixStatus();
-			App.zabbixManager.re
 			window.close();
 		});
 
@@ -82,10 +93,9 @@ $(document).ready(function() {
 		});
 	});
 
+
 	// SETTINGS
 	var $settings = $.createView('settings', $.getLocalConfig(), function($content) {
-
-
 
 		$content.find('#saveButton').click(function() {
 			var zabbixBase = $content.find('#zabbixBase').val();
