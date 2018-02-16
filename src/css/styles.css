@@ -101,7 +101,7 @@ i.arrow {
 	transform: rotate(135deg) !important;
 	transition: .3s;
 }
-a#zablink {
+a.zablink {
 	margin-left: 5px;
 	text-decoration: none;
 	padding: 1px 5px;
@@ -109,8 +109,9 @@ a#zablink {
 	background-color: #e7e7e7;
 	color: black;
 	border-radius: 4px;
+	border: 0px;
 }
-a#zablink:hover {
+a.zablink:hover {
 	background-color: #666666
 }
 

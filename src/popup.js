@@ -78,6 +78,19 @@ $(document).ready(function() {
 			window.close();
 		});
 
+		$('body').on('click', 'a#eventLink', function() {
+			var triggerid = $(this).closest('td').attr('id');
+			getEvent(config, triggerid, function(eventId){
+				window.open(config.zabbixBase + "tr_events.php?triggerid=" + triggerid + "&eventid=" + eventId,'_blank');
+			});
+		});
+		$('body').on('click', 'a#eventAck', function() {
+			var triggerid = $(this).closest('td').attr('id');
+			getEvent(config, triggerid, function(eventId){
+				window.open(config.zabbixBase + "zabbix.php?action=acknowledge.edit&eventids[]=" + eventId,'_blank');
+			});
+		});
+
 		$content.find('#groupid').change(function() {
 			var config = $.getLocalConfig();
 			$.setLocalConfig({
@@ -131,3 +144,37 @@ $(document).ready(function() {
 	});
 
 });
+
+function getEvent(config, triggerid, cb) {
+	var eventId;
+	var parseEvent = function(result) {
+		eventId = result['result'][0]['eventid'];
+		success: cb(eventId);
+	}
+
+	eventZab = new $.jqzabbix({
+		url: config['zabbixBase'] + 'api_jsonrpc.php',  // URL of Zabbix API
+		username: config['zabbixUser'],   // Zabbix login user name
+		password: $.decrypt(config['zabbixPass']),  // Zabbix login password
+		basicauth: false,    // If you use basic authentication, set true for this option
+		busername: '',       // User name for basic authentication
+		bpassword: '',       // Password for basic authentication
+		timeout: 5000,       // Request timeout (milli second)
+		limit: 1000,         // Max data number for one request
+	})
+
+	var params = {
+		"output": "extend",
+		"select_acknowledges": "extend",
+		"selectTags": "extend",
+		"sortfield": ["clock", "eventid"],
+		"objectids": triggerid,
+		"sortorder": "DESC"
+	};
+
+	eventZab.getApiVersion(null, function() {
+		eventZab.userLogin(null, function() {
+			eventZab.sendAjaxRequest('event.get', params, parseEvent);
+		})
+	});
+}
