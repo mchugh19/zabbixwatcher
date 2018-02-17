@@ -27,8 +27,7 @@
       <a href="` + config.zabbixBase + `hostinventories.php?hostid=` + triggerData.hostid + `" class="button zablink" id="zablink" target="_blank">Host Details</a>
       <a href="` + config.zabbixBase + `latest.php?fullscreen=0&filter_set=1&show_without_data=1&hostids%5B%5D=` + triggerData.hostid + `" class="button zablink" id="zablink" target="_blank">Latest Data</a>
       <a href="` + config.zabbixBase + `charts.php?fullscreen=0&groupid=0&graphid=0&hostid=` + triggerData.hostid + `" class="button zablink" id="zablink" target="_blank">Host Graphs</a>
-       | 
-      <a href="` + config.zabbixBase + `zabbix.php?action=problem.view&filter_set=1&filter_triggerids%5B%5D=` + triggerData.triggerid + `" class="button zablink" id="zablink" target="_blank">Problem Details</a>
+        | <a href="` + config.zabbixBase + `zabbix.php?action=problem.view&filter_set=1&filter_triggerids%5B%5D=` + triggerData.triggerid + `" class="button zablink" id="zablink" target="_blank">Problem Details</a>
       <a class="button zablink" id="eventLink">Event Details</a>
       <a class="button zablink" id="eventAck">Ack Event</a>
       </td></tr>`;
