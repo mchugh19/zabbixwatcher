@@ -38,10 +38,9 @@ $(document).ready(function() {
 		});
 
 		// Support toggle of advanced functionality row
-		$(".overview tr:odd").addClass("odd");
 		$(".overview tr.odd").click(function () {
 			var trToToggle = $(this).next("tr");
-			$(".overview tr:not(.odd)").not(trToToggle).hide();
+			$(".overview tr:not(.odd)").not(trToToggle).not(".header").hide();
 			$(".overview tr.odd").not($(this)).find("i.arrow").removeClass("toggle-down");
 			$(this).find("i.arrow").toggleClass("toggle-down");
 			$(trToToggle).toggle();
@@ -137,7 +136,7 @@ $(document).ready(function() {
 			});
 			window.close();
 		});
-		
+
 		$content.find('#cancelButton').click(function() {
 			window.close();
 		});

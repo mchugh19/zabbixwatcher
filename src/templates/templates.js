@@ -15,7 +15,7 @@
       var config = $.getLocalConfig();
       var buffer = "";
 
-      buffer += `<tr class="` + escapeExpression(triggerData.priorityClass) + `"><td class="system">`;
+      buffer += `<tr class="` + escapeExpression(triggerData.priorityClass) + ` odd"><td class="system">`;
       buffer += `<i class="arrow" title="arrow icon"></i>` + escapeExpression(triggerData.host)
       buffer += `
       </td>
@@ -53,7 +53,7 @@
     </div><hr />
     <table class="overview details">
     <tbody id="triggerTable">
-    <tr class="header odd">
+    <tr class="header">
       <th>System</th>
       <th>Description</th>
       <th>Priority</th>
