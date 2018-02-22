@@ -6,7 +6,7 @@ body {
 
 body.popup {
 	padding: 10px;
-	width: 770px;
+	min-width: 770px;
 	min-height: 150px;
 }
 
@@ -112,7 +112,8 @@ a.zablink {
 	border: 0px;
 }
 a.zablink:hover {
-	background-color: #666666
+	background-color: #666666;
+	cursor: pointer;
 }
 
 
